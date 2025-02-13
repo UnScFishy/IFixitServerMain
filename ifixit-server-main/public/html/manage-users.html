@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    <link rel="stylesheet" href="../css/manage-users.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Admin Panel</h2>
+            <ul>
+                <li><a href="manage-shops.html">Manage Shops</a></li>
+                <li><a href="manage-users.html" class="active">Manage Users</a></li>
+                <li><a href="booking-history.html">Bookings History</a></li>
+                <li><a href="javascript:void(0)" data-bind="click: logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="container">
+                <h1>Manage Users</h1>
+                
+                <!-- Loading Indicator -->
+                <div data-bind="visible: isLoading">Loading users...</div>
+                
+                <!-- Error Message -->
+                <div data-bind="visible: errorMessage" class="error">
+                    <span data-bind="text: errorMessage"></span>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: users">
+                        <tr>
+                            <td data-bind="text: email"></td>
+                            <td data-bind="text: role"></td>
+                            <td data-bind="text: formattedStatus"></td>
+                            <td>
+                                <button class="verify-btn" data-bind="click: $parent.activateUser">Activate</button>
+                                <button class="deny-btn" data-bind="click: $parent.deactivateUser">Deactivate</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="user-modal" class="modal" data-bind="visible: isModalVisible">
+            <div class="modal-content">
+                <span class="close-btn" data-bind="click: closeModal">&times;</span>
+                <h3 data-bind="text: modalTitle"></h3>
+                <p data-bind="text: modalContent"></p>
+
+                <div class="status-actions">
+                    <button class="verify-btn" data-bind="click: $data.confirmActivate">Confirm Activation</button>
+                    <button class="deny-btn" data-bind="click: $data.confirmDeactivation">Confirm Deactivation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Knockout.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js"></script>
+    
+    <!-- Manage Users ViewModel -->
+    <script src="../js/manage-users.js"></script>
+</body>
+</html>

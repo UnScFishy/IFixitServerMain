@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ifixit Admin</title>
+    <link rel="stylesheet" href="public/css/admin-login.css">
+</head>
+<body>
+    <div class="login-container" data-bind="with: loginViewModel">
+        <h2>Admin Login</h2>
+        <form id="admin-login-form" data-bind="submit: submitForm">
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Email" required data-bind="value: email">
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Password" required data-bind="value: password">
+            </div>
+            <button type="submit" class="login-btn" data-bind="enable: isSubmitting() === false">Login</button>
+        </form>
+        <!-- Error message binding -->
+        <div id="error-message" style="color: red;" data-bind="visible: errorMessage, text: errorMessage"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js"></script>
+    <script src="public/js/admin-login.js"></script>
+</body>
+</html>

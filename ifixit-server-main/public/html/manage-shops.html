@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Shops</title>
+    <link rel="stylesheet" href="../css/manage-shops.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Admin Panel</h2>
+            <ul>
+                <li><a href="manage-shops.html">Manage Shops</a></li>
+                <li><a href="manage-users.html">Manage Users</a></li>
+                <li><a href="booking-history.html">Bookings History</a></li>
+                <li><a href="javascript:void(0)" data-bind="click: logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="container">
+                <h1>Manage Shops</h1>
+                
+                <!-- Loading Indicator -->
+                <div data-bind="visible: isLoading">Loading shops...</div>
+                
+                <!-- Error Message -->
+                <div data-bind="visible: errorMessage" class="error">
+                    <span data-bind="text: errorMessage"></span>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shop Name</th>
+                            <th>Owner Name</th>
+                            <th>Business Permit</th>
+                            <th>Status</th> 
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: shops">
+                        <tr>
+                            <td data-bind="text: shop_name"></td>
+                            <td data-bind="text: owner_name"></td>
+                            <td>
+                                <button class="view-btn" data-bind="click: $parent.viewPermit">View</button>
+                            </td>
+                            <td data-bind="text: formattedStatus"></td> 
+                            <td>
+                                <button class="verify-btn" data-bind="click: $parent.verifyShop">Verify</button>
+                                <button class="deny-btn" data-bind="click: $parent.denyShop">Deny</button>
+                                <button class="deactivate-btn" data-bind="click: $parent.deactivateShop">Deactivate</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="permit-modal" class="modal" data-bind="visible: $data.isModalVisible">
+            <div class="modal-content">
+                <span class="close-btn" data-bind="click: $data.closeModal">&times;</span>
+                <h3 data-bind="text: $data.modalTitle"></h3>
+        
+                <!-- PDF viewer -->
+                <iframe data-bind="visible: $data.modalIsPDF, attr: { src: $data.modalContent }" width="100%" height="500px"></iframe>
+        
+                <!-- Image viewer -->
+                <img data-bind="visible: !$data.modalIsPDF, attr: { src: $data.modalContent }" style="max-width: 100%; max-height: 500px;" />
+        
+                <!-- Status Action Buttons -->
+                <div class="status-actions">
+                    <button class="verify-btn" data-bind="visible: $data.shopStatus !== 1, click: $data.setStatusVerified">Verify</button>
+                    <button class="deny-btn" data-bind="visible: $data.shopStatus !== 2, click: $data.setStatusDenied">Deny</button>
+                    <button class="deactivate-btn" data-bind="visible: $data.shopStatus !== 3, click: $data.setStatusDeactivated">Deactivate</button>
+        
+                    <p data-bind="visible: $data.shopStatus === 1" style="color: green;">Status: Verified</p>
+                    <p data-bind="visible: $data.shopStatus === 2" style="color: red;">Status: Denied</p>
+                    <p data-bind="visible: $data.shopStatus === 3" style="color: gray;">Status: Deactivated</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Knockout.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js"></script>
+    
+    <!-- Manage Shops ViewModel -->
+    <script src="../js/manage-shops.js"></script>
+</body>
+</html>
